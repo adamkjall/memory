@@ -93,7 +93,8 @@ const createBoard = cards => {
     /* Front of memmory card */
     const front = document.createElement("div");
     front.classList.add("front");
-    front.innerText = "🔴";
+    // front.innerText = "🔴";
+    front.innerText = "🎃";
 
     /* Back of memory card */
     const back = document.createElement("div");
