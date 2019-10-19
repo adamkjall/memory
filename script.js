@@ -1,5 +1,9 @@
 const container = document.querySelector(".container");
 
+const soundCardFlip = new Audio("audio/flip.ogg");
+const soundWinning = new Audio("audio/winning.wav");
+const SoundButton = new Audio("audio/cardFlip.wav")
+
 const cards = [
   "🍕",
   "🍕",
@@ -35,23 +39,29 @@ let isGameOver = false;
 
 let activeCards = [...initialState];
 
+
+
 //  The sorting method reorders elements randomly because
 //  Math.random() - 0.5) is a random number to could be positive or negative
 const shuffle = arr => {
   arr.sort(() => Math.random() - 0.5);
 };
 
+const playSound = sound => {
+  sound.currentTime = 0;
+  sound.play();
+}
 const toggleCard = e => {
   const card = e.currentTarget;
   const cardIsClosed = !card.classList.contains("open-active");
 
   /* card to toggle */
   if (cardIsClosed) {
+    playSound(soundCardFlip)
     /* check if first spot is available */
     if (activeCards[0].closed) {
       activeCards[0] = { card, closed: false };
       card.classList.add("open-active");
-
       /* check if second spot is available */
     } else if (activeCards[1].closed) {
       activeCards[1] = { card, closed: false };
@@ -78,6 +88,7 @@ const toggleCard = e => {
     if (isGameOver) {
       const gameOver = document.querySelector(".m-intro h2");
       gameOver.classList.toggle("hide");
+      playSound(soundWinning);
     }
   }
 };
@@ -124,6 +135,7 @@ const reset = document.querySelector(".reset-btn");
 const show = document.querySelector(".show-btn");
 
 const resetBoard = () => {
+  playSound(SoundButton);
   while (container.hasChildNodes()) {
     container.removeChild(container.firstChild);
   }
@@ -138,8 +150,10 @@ const resetBoard = () => {
   }
 };
 
+// for testing
 let toggleShow = false;
 const showBoard = () => {
+  playSound(SoundButton);
   const cards = document.querySelectorAll(".container > *");
   if (!toggleShow) {
     cards.forEach(card => {
@@ -161,17 +175,17 @@ let elapsedTime = 0;
 
 const uppdateTime = () => {
   if (isGameOver) return;
-
+  
+  elapsedTime++;
   const minutes = Math.floor(elapsedTime / 60);
   const seconds = elapsedTime - minutes * 60;
 
-  time.textContent = `Time: ${minutes < 10 ? "0" + minutes : minutes}:${
+  time.innerHTML = `Time:   ${minutes < 10 ? "0" + minutes : minutes}:${
     seconds < 10 ? "0" + seconds : seconds
   }`;
-  elapsedTime++;
 };
 setInterval(uppdateTime, 1000);
 
 reset.addEventListener("click", resetBoard);
 
-show.addEventListener("click", showBoard);
+// show.addEventListener("click", showBoard);

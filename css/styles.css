@@ -26,9 +26,12 @@ h2 {
   top: 30%;
 }
 p {
-  font-family: monospace;
+  font-family: 'Monoton', cursive;
   font-size: 1.5rem;
   margin-bottom: 0.2rem;
+  /* background-color: black; */
+  color:#01FA41;
+
 }
 body {
   display: grid;
@@ -99,7 +102,7 @@ button {
   border: none;
   outline: none;
   padding: 0.6rem 1.6rem;
-  margin: 1rem 0.8rem 0 0;
+  margin: 2rem 0.8rem 0 0;
 
   background-color: rgb(70, 5, 11);
   color: white;
