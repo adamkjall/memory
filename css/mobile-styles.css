@@ -1,19 +1,22 @@
 @media (max-width: 500px) {
-
   h1 {
     font-size: 3rem;
-    margin-bottom: .8rem;
+    margin-bottom: 0.8rem;
   }
-  h2{
+  h2 {
     font-size: 2.3rem;
   }
 
+  p {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+  }
   .container {
     grid-gap: 0.1rem;
   }
 
   .card {
     font-size: 2.5rem;
-    padding: .5rem;
+    padding: 0.5rem;
   }
 }

@@ -31,6 +31,7 @@ const initialState = [
 ];
 
 let score = 0;
+let isGameOver = false;
 
 let activeCards = [...initialState];
 
@@ -73,9 +74,8 @@ const toggleCard = e => {
     activeCards[1].card.classList.add("hide", "pairEffect");
     activeCards = [...initialState]; // pair found so reset active cards
     score += 2;
-    console.log(score);
-    
-    if(score >= cards.length) {
+    isGameOver = score >= cards.length;
+    if (isGameOver) {
       const gameOver = document.querySelector(".m-intro h2");
       gameOver.classList.toggle("hide");
     }
@@ -129,9 +129,10 @@ const resetBoard = () => {
   shuffle(cards);
   createBoard(cards);
   score = 0;
-
+  elapsedTime = 0;
+  gameOver = false;
   const gameOver = document.querySelector(".m-intro h2");
-  if(!gameOver.classList.contains("hide")) {
+  if (!gameOver.classList.contains("hide")) {
     gameOver.classList.add("hide");
   }
 };
@@ -143,6 +144,22 @@ const showBoard = () => {
     card.querySelector(".back").classList.add("show");
   });
 };
+
+const time = document.querySelector(".time");
+let elapsedTime = 0;
+
+const uppdateTime = () => {
+  if(isGameOver) return;
+
+  const minutes = Math.floor(elapsedTime / 60);
+  const seconds = elapsedTime - minutes * 60;
+
+  time.textContent = `Time: ${minutes < 10 ? "0" + minutes : minutes}:${
+    seconds < 10 ? "0" + seconds : seconds
+  }`;
+  elapsedTime++;
+};
+setInterval(uppdateTime, 1000);
 
 reset.addEventListener("click", resetBoard);
 
