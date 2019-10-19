@@ -131,26 +131,36 @@ const resetBoard = () => {
   createBoard(cards);
   score = 0;
   elapsedTime = 0;
-  gameOver = false;
+  isGameOver = false;
   const gameOver = document.querySelector(".m-intro h2");
   if (!gameOver.classList.contains("hide")) {
     gameOver.classList.add("hide");
   }
 };
 
+let toggleShow = false;
 const showBoard = () => {
   const cards = document.querySelectorAll(".container > *");
-  cards.forEach(card => {
-    card.querySelector(".front").style = "display: none";
-    card.querySelector(".back").classList.add("show");
-  });
+  if (!toggleShow) {
+    cards.forEach(card => {
+      card.querySelector(".front").style = "display: none";
+      card.querySelector(".back").classList.add("show");
+    });
+  } else {
+    cards.forEach(card => {
+      card.querySelector(".front").style = "display: block";
+      card.querySelector(".back").classList.remove("show");
+    });
+  }
+
+  toggleShow = !toggleShow;
 };
 
 const time = document.querySelector(".time");
 let elapsedTime = 0;
 
 const uppdateTime = () => {
-  if(isGameOver) return;
+  if (isGameOver) return;
 
   const minutes = Math.floor(elapsedTime / 60);
   const seconds = elapsedTime - minutes * 60;
