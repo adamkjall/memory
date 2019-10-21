@@ -1,8 +1,9 @@
 const container = document.querySelector(".container");
 
-const soundCardFlip = new Audio("audio/flip.ogg");
+// const soundCardFlip = new Audio("audio/cardFlip2.wav");
+const soundPoints = new Audio("audio/points.wav")
 const soundWinning = new Audio("audio/winning.wav");
-const SoundButton = new Audio("audio/cardFlip.wav")
+const SoundButton = new Audio("audio/menu.wav")
 
 const cards = [
   "🍕",
@@ -57,7 +58,7 @@ const toggleCard = e => {
 
   /* card to toggle */
   if (cardIsClosed) {
-    playSound(soundCardFlip)
+    // playSound(soundCardFlip)
     /* check if first spot is available */
     if (activeCards[0].closed) {
       activeCards[0] = { card, closed: false };
@@ -80,6 +81,7 @@ const toggleCard = e => {
   }
 
   if (checkIfPair()) {
+    playSound(soundPoints)
     activeCards[0].card.classList.add("hide", "pairEffect");
     activeCards[1].card.classList.add("hide", "pairEffect");
     activeCards = [...initialState]; // pair found so reset active cards
@@ -175,12 +177,12 @@ let elapsedTime = 0;
 
 const uppdateTime = () => {
   if (isGameOver) return;
-  
   elapsedTime++;
+
   const minutes = Math.floor(elapsedTime / 60);
   const seconds = elapsedTime - minutes * 60;
 
-  time.innerHTML = `Time:   ${minutes < 10 ? "0" + minutes : minutes}:${
+  time.innerHTML = `Time: ${minutes < 10 ? "0" + minutes : minutes}:${
     seconds < 10 ? "0" + seconds : seconds
   }`;
 };
