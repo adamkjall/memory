@@ -2,6 +2,7 @@
   font-family: "SEGA LOGO FONT";
   src: local("SEGA LOGO FONT"), url("SEGA.woff") format("woff");
 }
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -91,6 +92,10 @@ body {
 
 .show {
   display: block !important;
+}
+
+.none {
+  display: none;
 }
 
 .pairEffect {

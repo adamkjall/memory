@@ -1,9 +1,9 @@
 const container = document.querySelector(".container");
 
 // const soundCardFlip = new Audio("audio/cardFlip2.wav");
-const soundPoints = new Audio("audio/points.wav")
+const soundPoints = new Audio("audio/points.wav");
 const soundWinning = new Audio("audio/winning.wav");
-const SoundButton = new Audio("audio/menu.wav")
+const SoundButton = new Audio("audio/menu.wav");
 
 const cards = [
   "🍕",
@@ -40,8 +40,6 @@ let isGameOver = false;
 
 let activeCards = [...initialState];
 
-
-
 //  The sorting method reorders elements randomly because
 //  Math.random() - 0.5) is a random number to could be positive or negative
 const shuffle = arr => {
@@ -51,7 +49,7 @@ const shuffle = arr => {
 const playSound = sound => {
   sound.currentTime = 0;
   sound.play();
-}
+};
 const toggleCard = e => {
   const card = e.currentTarget;
   const cardIsClosed = !card.classList.contains("open-active");
@@ -81,7 +79,7 @@ const toggleCard = e => {
   }
 
   if (checkIfPair()) {
-    playSound(soundPoints)
+    playSound(soundPoints);
     activeCards[0].card.classList.add("hide", "pairEffect");
     activeCards[1].card.classList.add("hide", "pairEffect");
     activeCards = [...initialState]; // pair found so reset active cards
@@ -130,9 +128,6 @@ const checkIfPair = () => {
   return cardA === cardB;
 };
 
-shuffle(cards);
-createBoard(cards);
-
 const reset = document.querySelector(".reset-btn");
 const show = document.querySelector(".show-btn");
 
@@ -144,7 +139,7 @@ const resetBoard = () => {
   shuffle(cards);
   createBoard(cards);
   score = 0;
-  elapsedTime = 0;
+  elapsedTime = -1; // because of how update time is implemented
   isGameOver = false;
   const gameOver = document.querySelector(".m-intro h2");
   if (!gameOver.classList.contains("hide")) {
@@ -153,23 +148,13 @@ const resetBoard = () => {
 };
 
 // for testing
-let toggleShow = false;
 const showBoard = () => {
   playSound(SoundButton);
   const cards = document.querySelectorAll(".container > *");
-  if (!toggleShow) {
-    cards.forEach(card => {
-      card.querySelector(".front").style = "display: none";
-      card.querySelector(".back").classList.add("show");
-    });
-  } else {
-    cards.forEach(card => {
-      card.querySelector(".front").style = "display: block";
-      card.querySelector(".back").classList.remove("show");
-    });
-  }
-
-  toggleShow = !toggleShow;
+  cards.forEach(card => {
+    card.querySelector(".front").classList.toggle("none");
+    card.querySelector(".back").classList.toggle("show");
+  });
 };
 
 const time = document.querySelector(".time");
@@ -186,8 +171,12 @@ const uppdateTime = () => {
     seconds < 10 ? "0" + seconds : seconds
   }`;
 };
+
+shuffle(cards);
+createBoard(cards);
+
 setInterval(uppdateTime, 1000);
 
 reset.addEventListener("click", resetBoard);
 
-// show.addEventListener("click", showBoard);
+show.addEventListener("click", showBoard);
